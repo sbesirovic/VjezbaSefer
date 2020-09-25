@@ -1,47 +1,57 @@
 package com.example.FirstApp.Controllers;
 
+import com.example.FirstApp.Dto.AnswerRequestDto;
+import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Entities.Answer;
-import com.example.FirstApp.Services.AnswerService;
+import com.example.FirstApp.Services.Interface.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController // = @Controller + @ResponseBody on all methods (body = return value) || vol2 : response entity
+@RequestMapping(path = "/answers")
 public class AnswerController {
 
-    private AnswerService answerService;
 
     @Autowired
-    public void setAnswerService(AnswerService answerService) {
-        this.answerService = answerService;
-    }
+    private AnswerService answerService;
 
-    @RequestMapping(value = "/answers", method = RequestMethod.GET)
-    public List<Answer> getAllAnswers()
+    /*public void setAnswerService(AnswerService answerService) {
+        this.answerService = answerService;                             izbaceno jer imas autowired
+    }*/
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<AnswerResponseDto> getAllAnswers()
     {
         return answerService.getAllAnswers();
     }
 
-    @RequestMapping(value = "/answers/{id}", method = RequestMethod.GET)
-    public Answer getAnswerById(@RequestParam(value = "id") Long id)
+    @GetMapping(path="/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AnswerResponseDto getAnswerById(@PathVariable(value = "id") Long id)
     {
         return answerService.getAnswerById(id);
     }
 
-    @RequestMapping(value = "/answers", method = RequestMethod.POST)
-    public Answer addAnswer(@RequestBody Answer answer)
+    /*//$##################
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public AnswerResponseDto addAnswer(@RequestBody AnswerRequestDto answerRequestDto)
     {
-        return answerService.addAnswer(answer);
+        return answerService.addAnswer(answerRequestDto);
     }
 
-    //$##################
-    @RequestMapping(value = "/answers/{id}/questions/{idQuestion}", method = RequestMethod.PUT)
+    @PutMapping(path = "/{id}/questions/{idQuestion}")
+    @ResponseStatus(HttpStatus.OK)
     public Answer connectAnswer(@PathVariable(value = "id") Long id,@PathVariable(value = "idQuestion") Long idQuestion)
     {
         return answerService.connectAnswerWithQuestion(id, idQuestion);
     }
     //###########
+*/
+
 
 }

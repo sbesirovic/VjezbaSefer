@@ -14,7 +14,6 @@ public class Answer {
     private Long id;
 
     @Version
-    //@JsonProperty
     private Integer version;
 
     private String answerText;
@@ -25,7 +24,7 @@ public class Answer {
     @JoinColumn(name="question_id")
     private Question question;
 
-    @JsonIgnore // bice besk bez tog
+
     public Question getQuestion() {
         return question;
     }
@@ -42,12 +41,10 @@ public class Answer {
         this.id = id;
     }
 
-    @JsonProperty
     public Integer getVersion() {
         return version;
     }
 
-    @JsonIgnore
     public void setVersion(Integer version) {
         this.version = version;
     }
@@ -67,4 +64,5 @@ public class Answer {
     public void setCorrect(Boolean correct) {
         this.correct = correct;
     }
+
 }

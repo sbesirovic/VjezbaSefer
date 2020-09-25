@@ -19,6 +19,7 @@ public class Question {
     //@JsonProperty
     private Integer version;
 
+    //@Max potrebno ukljuciti, al hocu prvo @validate i to da iscitam
     private Integer level;
 
     //@Column(name="ako zelis posebno ime")
@@ -47,12 +48,12 @@ public class Question {
         this.id = id;
     }
 
-    @JsonProperty
+
     public Integer getVersion() {
         return version;
     }
 
-    @JsonIgnore
+
     public void setVersion(Integer version) {
         this.version = version;
     }

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication/*(exclude = {DataSourceAutoConfiguration.class })*/
+@SpringBootApplication//(scanBasePackages = {"target/generated-sources/annotations"})/*(exclude = {DataSourceAutoConfiguration.class })*/
 public class FirstAppApplication {
 
 	/*@Value("${spring.jpa.database-platform}")

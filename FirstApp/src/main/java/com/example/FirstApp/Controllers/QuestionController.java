@@ -1,69 +1,84 @@
 package com.example.FirstApp.Controllers;
 
+import com.example.FirstApp.Dto.AnswerRequestDto;
+import com.example.FirstApp.Dto.QuestionRequestDto;
+import com.example.FirstApp.Dto.QuestionResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
-import com.example.FirstApp.Services.QuestionService;
+import com.example.FirstApp.Services.Interface.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
-@RestController //@Controler nije radilo pa ovo staviom, vidi razlike
-
+@RestController                             //@Controler nije radilo pa ovo staviom, vidi razlike
+@RequestMapping (value = "/questions")
 public class QuestionController {
 
+    @Autowired
     private QuestionService questionService;
 
-    @Autowired
-    public void setQuestionService(QuestionService questionService)
-    {
-        this.questionService = questionService;
-    }
 
-    @RequestMapping (value = "/questions", method = RequestMethod.GET)
-    public List<Question> getAllQuestions ()
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<QuestionResponseDto> getAllQuestions ()
     {
         return questionService.getAllQuestions();
     }
 
-    @RequestMapping (value = "/questions/{id}", method = RequestMethod.GET)
-    public Question getQuestionById(@PathVariable(value = "id") Long id)
+    @GetMapping (path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public QuestionResponseDto getQuestionById(@PathVariable(value = "id") Long id)
     {
         return questionService.getQuestionById(id);
     }
 
-    @RequestMapping (value = "/questions", method = RequestMethod.POST)
-    public Question addQuestion (@RequestBody Question question)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public QuestionResponseDto addQuestion (@RequestBody QuestionRequestDto questionRequestDto)
     {
-        return questionService.addQuestion(question);
+        return questionService.addQuestion(questionRequestDto);
     }
 
-    @RequestMapping (value = "/questions", method = RequestMethod.DELETE)
+    @PostMapping (value = "/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public QuestionResponseDto addAnswer (@PathVariable(value = "id") Long id, @RequestBody AnswerRequestDto answerRequestDto)
+    {
+        return questionService.addAnswer(id,answerRequestDto);
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void  deleteAllQuestions ()
     {
          questionService.deleteAllQuestion();
     }
 
-    @RequestMapping (value = "/questions/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping (path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void  deleteQuestionById (@PathVariable(value = "id") Long id)
     {
         questionService.deleteQuestionById(id);
     }
 
-
-    @RequestMapping (value = "/questions/{id}", method = RequestMethod.PUT)
-    public Question editQuestionById(@PathVariable(value = "id") Long id, @RequestBody Question question)
+    @DeleteMapping(path = "/{id}/answers/{idAnswer}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteQuestionAnswerById (@PathVariable(value = "id") Long id,@PathVariable(value = "idAnswer") Long idAnswer)
     {
-        return questionService.editQuestionById(id, question);
+        questionService.deleteQuestionAnswerByIdAnswer(id,idAnswer);
     }
 
-    @RequestMapping (value = "/questions/{id}", method = RequestMethod.POST)
-    public Question addAnswer (@PathVariable(value = "id") Long id, @RequestBody Answer answer)
+    @PutMapping (path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") Long id, @RequestBody QuestionRequestDto questionRequestDto)
     {
-        return questionService.addAnswer(id,answer);
+        return questionService.editQuestionById(id, questionRequestDto);
     }
+
+
 
 
 
