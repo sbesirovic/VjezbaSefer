@@ -1,68 +1,49 @@
 package com.example.FirstApp.Entities;
 
+import com.example.FirstApp.Validators.OnlyOneTrue;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 
 import javax.persistence.*;
+import javax.sound.midi.MidiMessage;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
 
 @Entity
-public class Answer {
+@Setter @Getter @NoArgsConstructor
+public class Answer{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.PROTECTED)
     private Long id;
 
     @Version
     private Integer version;
 
+    @NotBlank(message = "Answer text must be entered")
     private String answerText;
 
+    @NonNull
+    @NotNull
     private Boolean correct;
 
     @ManyToOne
     @JoinColumn(name="question_id")
     private Question question;
 
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public String getAnswerText() {
-        return answerText;
-    }
-
-    public void setAnswerText(String answerText) {
+    public Answer(@NotBlank(message = "Answer text must be entered") String answerText, @NonNull @NotNull Boolean correct) {
         this.answerText = answerText;
-    }
-
-    public Boolean getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Boolean correct) {
         this.correct = correct;
     }
 
+    public Long getId()
+    {
+        if(id != null) return id;
+        else return -1L;
+    }
 }

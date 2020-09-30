@@ -1,10 +1,18 @@
 package com.example.FirstApp.Dto;
 
 import com.example.FirstApp.Entities.Answer;
+import com.example.FirstApp.OnCreate;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter @Setter @NoArgsConstructor
 public class QuestionResponseDto {
 
     private Long id;
@@ -13,39 +21,10 @@ public class QuestionResponseDto {
 
     private String questionText;
 
+    //@Size(max = 4, message = "This Question already has 4 answers.",groups = {OnCreate.class})
     private List<AnswerResponseDto> answers;
 
-    public List<AnswerResponseDto> getAnswers() {
-        return answers;
-    }
 
-    public void setAnswers(List<AnswerResponseDto> answers) {
-        this.answers = answers;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
 
     public void addAnswer(AnswerResponseDto answerResponseDto) {
         if (answerResponseDto == null) {

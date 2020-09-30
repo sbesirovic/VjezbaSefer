@@ -1,43 +1,22 @@
 package com.example.FirstApp.Dto;
 
+import lombok.*;
+
+/*@Accessors(fluent = true) umjesto getText() bi pisao samo text() */@Getter @Setter @NoArgsConstructor @ToString
 public class AnswerResponseDto {
 
     private Long id;
+
     private String text;
+
     private Boolean correct;
+
+    @Getter(AccessLevel.PROTECTED)
     private Long testiramDtoExplicit;
 
-
-    public Long getTestiramDtoExplicit() {
-        return testiramDtoExplicit;
-    }
-
-    public void setTestiramDtoExplicit(Long testiramDtoExplicit) {
-        this.testiramDtoExplicit = testiramDtoExplicit;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String answerText) {
-        this.text = answerText;
-    }
-
-    public Boolean getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Boolean correct) {
+    public AnswerResponseDto(Long id,String text, Boolean correct) {
+        this.id  = id;
+        this.text = text;
         this.correct = correct;
     }
-
 }

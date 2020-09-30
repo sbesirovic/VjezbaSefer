@@ -1,6 +1,7 @@
 package com.example.FirstApp.Services.Implementation;
 
 import com.example.FirstApp.Dto.AnswerRequestDto;
+import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Dto.Mapper.AnswerDtoMapper;
 import com.example.FirstApp.Dto.Mapper.QuestionDtoMapper;
 import com.example.FirstApp.Dto.QuestionRequestDto;
@@ -8,17 +9,26 @@ import com.example.FirstApp.Dto.QuestionResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
+import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Repositories.QuestionRepository;
 import com.example.FirstApp.Services.Interface.QuestionService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
+
+    @Autowired
+    private AnswerRepository answerRepository;
 
     private QuestionRepository questionRepository;
 
@@ -39,17 +49,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionResponseDto addQuestion(QuestionRequestDto questionRequestDto) {
-        // posebni uslov za level < 1 , kakva greska da se desi ?
-        if(questionRequestDto.getLevel()!=null && questionRequestDto.getQuestionText()!=null)
-        {
+    public QuestionResponseDto addQuestion( QuestionRequestDto questionRequestDto) {
+
             Question question = questionDtoMapper.requestQuestionToQuestion(questionRequestDto);
             questionRepository.save(question);
 
             return questionDtoMapper.questionToResponseQuestion(question);
-        }
 
-        else return null; // odnosno neka greska ili nesto
     }
 
     @Override
@@ -61,19 +67,26 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionResponseDto editQuestionById(Long id, QuestionRequestDto questionRequestDto) {
 
+
         Optional<Question> optionalQuestion = questionRepository.findById(id);
 
         if(optionalQuestion.isPresent())
         {
+            //
+            String patternStr = ".*\\S.*"; // patern da nije string od samih spaceova (regexi za kompleksnije stvari)
+            Pattern pattern = Pattern.compile(patternStr);
+            //Matcher matcher = pattern.matcher(questionRequestDto.getQuestionText());   da ne bi pravio if null dole sam odma u hodu
+            //
+
             Question question = questionDtoMapper.requestQuestionToQuestion(questionRequestDto);
-            if(question.getLevel()!=null)optionalQuestion.get().setLevel(question.getLevel());
-            if(question.getQuestionText()!=null)optionalQuestion.get().setQuestionText(question.getQuestionText());
+            if(question.getLevel()!=null) optionalQuestion.get().setLevel(question.getLevel());
+            if(question.getQuestionText()!=null && pattern.matcher(question.getQuestionText()).matches() ) optionalQuestion.get().setQuestionText(question.getQuestionText());
 
             // # ovo dvoje moze biti 1 linija #
             questionRepository.save(optionalQuestion.get());
             return questionDtoMapper.questionToResponseQuestion(optionalQuestion.get()); // opcional jer ako je null necu te nullove da mi vraca nego u DB sta je
         }
-        else return null; // neka greska da put ne moze mjenjati jer ne postoji taj id
+        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
     @Override
@@ -97,22 +110,25 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionResponseDto addAnswer(Long id, AnswerRequestDto answerRequestDto) {
+    public AnswerResponseDto addAnswer(Long id, AnswerRequestDto answerRequestDto) {
 
         Optional<Question> optionalQuestion = questionRepository.findById(id);
         if(optionalQuestion.isPresent())
         {
             Question question = optionalQuestion.get();
             Answer answer = answerDtoMapper.requestAnswerToAnswer(answerRequestDto);
+//BUSSINES LOGIC   SA SAMO JEDNIM TACNIM ODGOVOROM, TAKVI VLAIDATORI SE U PRINCIPU ROIJETKO PRAVE. BITNO DA ZNAS SNOVNE I ONE KAD SE KRIZAJU...
+// neki QuestionValidator i AnswerValidatorHelper da ne bi ovdje sad imao kod, samo pozovem metode validacije il tako nesto.
+
 
             question.setAnswer(answer);
-            answer.setQuestion(question); // DA LI JE OVA LINIJA BITNA? % ASK
+            answer.setQuestion(question);
+            answerRepository.save(answer);
 
-            return questionDtoMapper.questionToResponseQuestion(questionRepository.save(question));
+            return answerDtoMapper.answerToResponseAnswer(answer);
         }
 
-
-        else return null; // neka greska da nema pitanja na koje se veze odg
+        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
     @Override

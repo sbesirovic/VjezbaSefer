@@ -30,12 +30,13 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public List<AnswerResponseDto> getAllAnswers() {
-        List<AnswerResponseDto> answerResponseDtoList = answerDtoMapper.answerResponseListToAnswerList((List<Answer>)answerRepository.findAll());
+        List<AnswerResponseDto> answerResponseDtoList = answerDtoMapper.answerListToAnswerResponseList( (List<Answer>)answerRepository.findAll() );
         return answerResponseDtoList;
     }
 
     @Override
     public AnswerResponseDto getAnswerById(Long id) {
+
         Optional<Answer> optionalAnswer = answerRepository.findById(id);
         if(optionalAnswer.isPresent())
         {
@@ -49,7 +50,7 @@ public class AnswerServiceImpl implements AnswerService {
     //#########################
     @Override
     public AnswerResponseDto addAnswer(AnswerRequestDto answerRequestDto) {
-        // PROVJERIS JEL POSLAO SVE STO TREBA CORECT I TeXT
+
         Answer answer = answerDtoMapper.requestAnswerToAnswer(answerRequestDto);
         answerRepository.save(answer);
 

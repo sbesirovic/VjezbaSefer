@@ -2,6 +2,7 @@ package com.example.FirstApp.Services.Interface;
 
 
 import com.example.FirstApp.Dto.AnswerRequestDto;
+import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Dto.QuestionRequestDto;
 import com.example.FirstApp.Dto.QuestionResponseDto;
 import com.example.FirstApp.Entities.Answer;
@@ -16,7 +17,7 @@ public interface QuestionService {
     QuestionResponseDto editQuestionById(Long id, QuestionRequestDto questionRequestDto);
     QuestionResponseDto getQuestionById(Long id);
     void deleteQuestionById (Long id);
-    QuestionResponseDto addAnswer (Long id, AnswerRequestDto answerRequestDto);
+    AnswerResponseDto addAnswer (Long id, AnswerRequestDto answerRequestDto);
     void deleteQuestionAnswerByIdAnswer (Long id, Long idAnswer);
 
 }

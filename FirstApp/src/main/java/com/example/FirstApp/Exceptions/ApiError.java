@@ -15,6 +15,7 @@ public class ApiError {
         this.status = status;
         this.message = message;
         this.debugMessage = ex.getMessage();
+
     }
 
     public ApiError(HttpStatus status, Throwable ex) {

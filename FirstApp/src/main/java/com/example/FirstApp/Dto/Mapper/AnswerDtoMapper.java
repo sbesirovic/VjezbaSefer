@@ -25,5 +25,5 @@ public interface AnswerDtoMapper {
     Answer requestAnswerToAnswer (AnswerRequestDto answerRequestDto);
 
 
-    List<AnswerResponseDto> answerResponseListToAnswerList(List<Answer> answerList);
+    List<AnswerResponseDto> answerListToAnswerResponseList(List<Answer> answerList);
 }

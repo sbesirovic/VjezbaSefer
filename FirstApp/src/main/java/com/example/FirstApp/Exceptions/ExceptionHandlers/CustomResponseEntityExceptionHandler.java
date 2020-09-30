@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +14,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
+import javax.validation.Path.Node;
+import java.util.HashSet;
+import java.util.Set;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler  extends ResponseEntityExceptionHandler {
@@ -37,9 +43,10 @@ public class CustomResponseEntityExceptionHandler  extends ResponseEntityExcepti
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String error = "Object doesn't have all attributes"; // moras detaljnije sa vise podataka kasnije to ApiError
-        return  buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST,error,ex));//422
-
+        String error = "Validation problem: "; // moras detaljnije sa vise podataka kasnije to ApiError
+        error += ex.getBindingResult().getFieldError().getDefaultMessage();
+        error += " (rejected value {"+ex.getBindingResult().getFieldError().getField()+" = "+ex.getBindingResult().getFieldError().getRejectedValue()+"})";
+        return  buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST,error,ex));//422 a bad request je 400 jer nemam 422 ponudeno, kako cu ? warning 100%
     }
 
     /*@Override
@@ -56,7 +63,44 @@ public class CustomResponseEntityExceptionHandler  extends ResponseEntityExcepti
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND,ex));
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<Object>  onConstraintValidationException(ConstraintViolationException ex)
+    {
+        //MethodArgumentNotValidException exp = ex;
+        String error = "Validation problem: "; // moras detaljnije sa vise podataka kasnije to ApiError
+        String fieldName = null;
 
+        for(ConstraintViolation violation: ex.getConstraintViolations())
+        {
+            // get the last node of the violation stupid way :S
+            ConstraintViolation<?> v = ex.getConstraintViolations().iterator().next();
+            for (Node node : v.getPropertyPath()) {
+                fieldName = node.getName();
+            }
+            //######
+
+            //error += "ex.getBindingResult().getFieldError().getDefaultMessage()";
+            error += v.getMessageTemplate();
+            error += " (rejected value {"+fieldName+" = "+v.getInvalidValue()+"})";
+
+        }
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST,error,ex));
+    }
+
+    @ExceptionHandler({ TransactionSystemException.class }) // because service layer made a mistake, then return transactional exception back.
+    public ResponseEntity<Object> handleConstraintViolation(Exception ex, WebRequest request) {
+        Throwable cause = ((TransactionSystemException) ex).getRootCause();
+        Set<ConstraintViolation<?>> constraintViolations = new HashSet<>();
+        if (cause instanceof ConstraintViolationException) {
+            constraintViolations = ((ConstraintViolationException) cause).getConstraintViolations();
+        }
+        return buildResponseEntity(new ApiError(HttpStatus.EXPECTATION_FAILED,"LOWER LAYER MISTAKE: "+constraintViolations.toString(),ex));
+    }
+
+    @ExceptionHandler({ IllegalArgumentException.class }) // because service layer made a mistake, then return transactional exception back.
+    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex, WebRequest request) {
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST,"Output Not Implemented",ex));
+    }
 
 
     //

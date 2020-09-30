@@ -1,21 +1,27 @@
 package com.example.FirstApp.Controllers;
 
 import com.example.FirstApp.Dto.AnswerRequestDto;
+import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Dto.QuestionRequestDto;
 import com.example.FirstApp.Dto.QuestionResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
+import com.example.FirstApp.OnCreate;
+import com.example.FirstApp.OnUpdate;
 import com.example.FirstApp.Services.Interface.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController                             //@Controler nije radilo pa ovo staviom, vidi razlike
 @RequestMapping (value = "/questions")
+@Validated
 public class QuestionController {
 
     @Autowired
@@ -24,7 +30,7 @@ public class QuestionController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<QuestionResponseDto> getAllQuestions ()
+    public  List<QuestionResponseDto> getAllQuestions ()
     {
         return questionService.getAllQuestions();
     }
@@ -38,14 +44,16 @@ public class QuestionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public QuestionResponseDto addQuestion (@RequestBody QuestionRequestDto questionRequestDto)
+    @Validated(OnCreate.class)
+    public QuestionResponseDto addQuestion (@Valid @RequestBody QuestionRequestDto questionRequestDto)
     {
         return questionService.addQuestion(questionRequestDto);
     }
 
     @PostMapping (value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public QuestionResponseDto addAnswer (@PathVariable(value = "id") Long id, @RequestBody AnswerRequestDto answerRequestDto)
+    @Validated(OnCreate.class)
+    public AnswerResponseDto addAnswer (@PathVariable(value = "id") Long id, @Valid @RequestBody AnswerRequestDto answerRequestDto)
     {
         return questionService.addAnswer(id,answerRequestDto);
     }
@@ -73,7 +81,8 @@ public class QuestionController {
 
     @PutMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") Long id, @RequestBody QuestionRequestDto questionRequestDto)
+    @Validated(OnUpdate.class)
+    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") Long id, @Valid @RequestBody QuestionRequestDto questionRequestDto)
     {
         return questionService.editQuestionById(id, questionRequestDto);
     }
