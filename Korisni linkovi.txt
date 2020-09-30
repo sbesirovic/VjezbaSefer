@@ -1,3 +1,18 @@
 Da ne saljem sebi vise preko fba najbolje da imam ovdje sve, od 30.9.2020. (iz chata fb prebaci ovdje)
 ___________________________________
 
+
+Dobar link, sumirano oko unit i integracionih testova
+	- https://stackabuse.com/how-to-test-a-spring-boot-application/
+		#NE RADI MI ZADNJI PRIMJER KONEKCIJA OSTALO JASNO
+
+unit testing kada budem radio permisije
+	- https://medium.com/swlh/unit-testing-spring-method-security-ca85c026046c
+
+mockbean detaljniji primjeri kompleksniji (nisma citao)
+	- https://dzone.com/articles/how-to-mock-spring-bean-version-2
+
+
+delete testing goood but im hurry
+ + https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/html/boot-features-testing.html
+ + https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/testing.html#integration-testing

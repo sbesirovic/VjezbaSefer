@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Setter @Getter @NoArgsConstructor
+@Setter @Getter @NoArgsConstructor @ToString
 public class Answer{
 
     @Id

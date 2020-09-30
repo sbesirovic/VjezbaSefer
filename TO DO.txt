@@ -23,6 +23,34 @@ DTO + VALID ? za svaki reqDTO moram primati i valid a onda i za db da provjerava
 
 
 
+_______________________
 
 
+Far future:
+1. Koristim mockbean sa springboottest i runwith springrunner.class za obicne UNIT testove (radi dto) -> msm da ih to usporava ali nisam pronasao rjesenje kako da sa mock uradim jer je dto uvijek null.
+
+
+
+
+__________ Far future ANSWER 1._____________
+
+Problem 1 far future, se moze rijesiti tako sto se stavi i na dtomaper @Mock, uz koristenje u @test metodama na nacin
+
+when(answerRepository.findById(13L)).thenReturn(Optional.of(new Answer("Answer of the question", false)));
+        Answer answer = answerRepository.findById(13L).get();
+     when(answerDtoMapper.answerToResponseAnswer(answer)).thenCallRealMethod().thenReturn(new AnswerResponseDto());
+
+i tek tada dtomaper bude pravi objekat
+
+
+answer 2 for 1.  nisam testirao al nesot slicno
+        @Before
+        public void setUp() {
+            when(modelMapper.map(any(), any())).thenReturn(userDTO);
+
+            userDTO.setId(1L);
+            userDTO.setUsername("zavada");
+            userDTO.setUserId("33b4c069-e907-45a9-8d49-2042044c56e0");
+        }
+_______________________________
 
