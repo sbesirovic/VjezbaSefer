@@ -41,9 +41,8 @@ public class Answer{
         this.correct = correct;
     }
 
-    public Long getId()
+    public Long getPractice()
     {
-        if(id != null) return id;
-        else return -1L;
+        return 1112L;
     }
 }

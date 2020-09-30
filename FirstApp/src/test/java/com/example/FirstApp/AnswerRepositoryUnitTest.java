@@ -2,6 +2,7 @@ package com.example.FirstApp;
 
 
 
+import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
 import com.example.FirstApp.Repositories.AnswerRepository;
@@ -37,6 +38,7 @@ public class AnswerRepositoryUnitTest {
         when(answerRepository.findAll()).thenReturn(Stream
                 .of(new Answer("odg",true),new Answer("drugi",false)).collect(Collectors.toList())    );
 
+        for(AnswerResponseDto answerResponseDto:answerService.getAllAnswers()) System.out.println(answerResponseDto.toString());
         // then
         assertEquals(2,answerService.getAllAnswers().size());
         assertEquals(false,answerService.getAllAnswers().get(1).getCorrect());

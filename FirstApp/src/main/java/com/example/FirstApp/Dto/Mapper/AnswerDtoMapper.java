@@ -16,8 +16,9 @@ public interface AnswerDtoMapper {
     //AnswerDtoMapper INSTANCE = Mappers.getMapper(AnswerDtoMapper.class);
 
     @Mappings({
-            @Mapping(target = "testiramDtoExplicit", /*source = "answer.practice",/* defaultExpression="java(13)",*/expression = "java(answer.getId()+13L)"),
-            @Mapping(target = "text",source = "answer.answerText")
+            @Mapping(target = "testiramDtoExplicit", source = "answer.practice",defaultExpression="java(-1L)"/*expression = "java(answer.getId()+13L)"*/),
+            @Mapping(target = "text",source = "answer.answerText"),
+            @Mapping(target = "id", source = "answer.id",defaultExpression="java(-1L)")//, ubacena radi unit testova da ne krahira kad nema id
     })
     AnswerResponseDto answerToResponseAnswer (Answer answer);
 
