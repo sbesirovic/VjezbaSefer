@@ -1,0 +1,28 @@
+//#TO DO
+
+unit testovi
+integracioni testovi
+
+
+
+@autowired detaljnije izuciti, prednosti mane
+__________
+
+moje
+
+@transsactional 
+## Koristi validclasshelpere za business
+
+ConstraintViolationException se baca kada prilikom spasavanja u db prekrsimo ogranicenja validnog inputa
+
+@VALID 
+DTO + VALID ? za svaki reqDTO moram primati i valid a onda i za db da provjerava kada se pise u db da se sta nije promjenilo 
+ dakle na svakom dto kod mene treba provjera @size za level 
+
+
+
+
+
+
+
+
