@@ -7,6 +7,8 @@ INSERT INTO question (id,version,level,question_Text) VALUES
 INSERT INTO question (id,version,level,question_Text) VALUES
 (3,1,15,'question-hardcoded');
 
+INSERT INTO question (id,version,level,question_Text) VALUES
+(4,1,15,'question-hardcoded');
 
 
 INSERT INTO answer (id,version,answer_Text,correct,question_id) VALUES

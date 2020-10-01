@@ -1,6 +1,7 @@
-package com.example.FirstApp;
+package com.example.FirstApp.AnswerTest;
 
 import com.example.FirstApp.Entities.Answer;
+import com.example.FirstApp.FirstAppApplication;
 import com.example.FirstApp.Repositories.AnswerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,3 +41,6 @@ public class AnswerControllerWebIntegrationTest {
     }
 
 }
+
+
+//RestAssured bibl za ovo se koriit umjesto resttemplate on kaze !!!!!!!!!! 100% WARNING omorit sad

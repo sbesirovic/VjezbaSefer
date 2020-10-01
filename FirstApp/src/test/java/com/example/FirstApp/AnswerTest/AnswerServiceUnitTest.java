@@ -1,4 +1,4 @@
-package com.example.FirstApp;
+package com.example.FirstApp.AnswerTest;
 
 
 
@@ -24,16 +24,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.hamcrest.core.Is.is;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
 
 @RunWith(SpringRunner.class)  // poenta je sto sad moze i bez mocka zvat repo nad DB, pa nez jel bas to uredu da bude kod unit testova ? 100% warning. Jedino da mockujem dtoMapper sa onim nacinom before() u notepadu ako da.
 @SpringBootTest
-public class AnswerRepositoryUnitTest {
+public class AnswerServiceUnitTest {
 
     @Autowired
     private AnswerService answerService;
@@ -43,7 +41,7 @@ public class AnswerRepositoryUnitTest {
 
 
     @Test
-    public void getAnswersTest() {
+    public void getAllAnswers() {
         //when
         when(answerRepository.findAll()).thenReturn(Stream
                 .of(new Answer("odg",true),new Answer("drugi",false)).collect(Collectors.toList())    );
@@ -55,11 +53,27 @@ public class AnswerRepositoryUnitTest {
     }
 
     @Test(expected = EntityNotFoundException.class)
-    public void getAnswersTestException()
+    public void getAnswerByIdTestException()
     {
         when(answerRepository.findById(12L)).thenThrow(new EntityNotFoundException("Answer with id 12 doesn't exist"));
 
-        answerService.getAnswerById(13L);
+        answerService.getAnswerById(12L);
+    }
+
+    @Test
+    public void getAnswerByIdTestCaughtException()
+    {
+        when(answerRepository.findById(12L)).thenThrow(new EntityNotFoundException("Answer with id 12 doesn't exist"));
+
+        try
+        {
+            answerService.getAnswerById(12L);
+        }
+        catch(Exception ex)
+        {
+            assertEquals(ex.getClass(), EntityNotFoundException.class);
+        }
+
     }
 
     @Test
