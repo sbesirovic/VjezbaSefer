@@ -5,6 +5,7 @@ package com.example.FirstApp.AnswerTest;
 import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
+import com.example.FirstApp.FirstAppApplication;
 import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Services.Interface.AnswerService;
 
@@ -30,7 +31,7 @@ import static org.mockito.Mockito.*;
 
 
 @RunWith(SpringRunner.class)  // poenta je sto sad moze i bez mocka zvat repo nad DB, pa nez jel bas to uredu da bude kod unit testova ? 100% warning. Jedino da mockujem dtoMapper sa onim nacinom before() u notepadu ako da.
-@SpringBootTest
+@SpringBootTest(classes = FirstAppApplication.class)
 public class AnswerServiceUnitTest {
 
     @Autowired

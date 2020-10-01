@@ -16,3 +16,7 @@ mockbean detaljniji primjeri kompleksniji (nisma citao)
 delete testing goood but im hurry
  + https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/html/boot-features-testing.html
  + https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/testing.html#integration-testing
+
+
+REST ASSURED
+	- https://www.baeldung.com/rest-assured-tutorial
