@@ -1,30 +1,20 @@
 package com.example.FirstApp.AnswerTest;
 
-import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.FirstAppApplication;
 
-import com.example.FirstApp.Repositories.AnswerRepository;
+
 import io.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-
-import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 

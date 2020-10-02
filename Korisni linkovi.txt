@@ -20,3 +20,26 @@ delete testing goood but im hurry
 
 REST ASSURED
 	- https://www.baeldung.com/rest-assured-tutorial
+
+SECURITY
+	- https://www.toptal.com/java/rest-security-with-jwt-spring-security-and-java
+		+ Log Out problems: https://stackoverflow.com/questions/21978658/invalidating-json-web-tokens#23089839
+			#Maybe  ANSWER + LOG OUT: Consider using a short expiration time on the access token and using a 
+						   refresh token, with a long-lived expiration, to allow for checking 
+						   of the user's access status in a database (blacklisting)
+					link:   -   https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+
+	- lijep video korinosti jwt (bez implementacije) : https://www.youtube.com/watch?v=7Q17ubqLfaM
+		+ !!!! Log Out problem nije rijesio !!!!
+
+	- JWT WHY NOT - https://www.youtube.com/watch?v=dgg1dvs0Bn4  + links in description
+other tmp delete:
+
+	https://www.youtube.com/watch?v=926mknSW9Lo
+	https://www.youtube.com/watch?v=soGRyl9ztjI
+	https://www.youtube.com/watch?v=SLc3cTlypwM
+	https://www.youtube.com/watch?v=dq39w4MiZzs
+	* https://www.youtube.com/watch?v=-Z57Ss_uiuc
+
+https://www.baeldung.com/rest-api-spring-oauth2-angular
+https://www.baeldung.com/spring-security-oauth-jwt

@@ -1,11 +1,9 @@
 package com.example.FirstApp;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication//(scanBasePackages = {"target/generated-sources/annotations"})/*(exclude = {DataSourceAutoConfiguration.class })*/
+@SpringBootApplication
 public class FirstAppApplication {
 
 	/*@Value("${spring.jpa.database-platform}")

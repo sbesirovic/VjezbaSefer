@@ -1,9 +1,6 @@
 //#TO DO
 
-unit testovi
-integracioni testovi
-
-
+spring security jwt token , role , pa da zastitim ent pointe , 												kejbl cable? wht?
 
 @autowired detaljnije izuciti, prednosti mane
 __________
@@ -11,7 +8,7 @@ __________
 moje
 
 @transsactional 
-## Koristi validclasshelpere za business
+## Koristi validclasshelpere za business logic validation (tacno 4 odgovora, samo 1 true)
 
 ConstraintViolationException se baca kada prilikom spasavanja u db prekrsimo ogranicenja validnog inputa
 
@@ -19,7 +16,7 @@ ConstraintViolationException se baca kada prilikom spasavanja u db prekrsimo ogr
 DTO + VALID ? za svaki reqDTO moram primati i valid a onda i za db da provjerava kada se pise u db da se sta nije promjenilo 
  dakle na svakom dto kod mene treba provjera @size za level 
 
-
+@@Security is the enemy of convenience, and vice versa.
 
 
 
@@ -43,7 +40,7 @@ when(answerRepository.findById(13L)).thenReturn(Optional.of(new Answer("Answer o
 i tek tada dtomaper bude pravi objekat
 
 
-answer 2 for 1.  nisam testirao al nesot slicno
+answer 2 for 1.  nisam testirao al nesot slicno ovome bi moglo raditi
         @Before
         public void setUp() {
             when(modelMapper.map(any(), any())).thenReturn(userDTO);
