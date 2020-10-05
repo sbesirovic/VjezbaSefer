@@ -1,11 +1,19 @@
 //#TO DO
 
-spring security jwt token , role , pa da zastitim ent pointe , 												kejbl cable? wht?
+spring security jwt token , role , pa da zastitim end pointe , 	
+NAPOMENA: NECES U DB DODAVATI NI USERE NI ROLE, VEC CES SAMO PROBATI JWT FUNKCIONALNOST, PRAVECI jwt paket i otpakivajuci ga da provjeris jel validan
+mozes staviti i samo provjeru a u jwt io generisat tokene koje NECS NI SLAT KORISNIKU SAD DA TO PAMTI, vec je bitno smao da shvatis sta je jwt token
+i onda zamislimo da je zapamcen taj token a ja ga samo onda copy paste u slanju na neki api endpoint da vidimo ocel mi vratit odgovor kakav treba raspakirajuci moj id moje role i vrijeme da li je isteklo expired
+			
+
+TODONEXT : KAKO DA GET I POST JEDAN DAS DRUGI NEDAS USERU	
+					
 
 @autowired detaljnije izuciti, prednosti mane
 __________
 
 moje
+HITNO @BEAN uz last tut auth mang.
 
 @transsactional 
 ## Koristi validclasshelpere za business logic validation (tacno 4 odgovora, samo 1 true)
@@ -16,10 +24,10 @@ ConstraintViolationException se baca kada prilikom spasavanja u db prekrsimo ogr
 DTO + VALID ? za svaki reqDTO moram primati i valid a onda i za db da provjerava kada se pise u db da se sta nije promjenilo 
  dakle na svakom dto kod mene treba provjera @size za level 
 
-@@Security is the enemy of convenience, and vice versa.
+##########Security is the enemy of convenience, and vice versa.
 
 
-
+https://docs.spring.io/spring-security/site/docs/4.2.x/reference/html/el-access.html     help
 _______________________
 
 
@@ -50,4 +58,6 @@ answer 2 for 1.  nisam testirao al nesot slicno ovome bi moglo raditi
             userDTO.setUserId("33b4c069-e907-45a9-8d49-2042044c56e0");
         }
 _______________________________
+
+
 

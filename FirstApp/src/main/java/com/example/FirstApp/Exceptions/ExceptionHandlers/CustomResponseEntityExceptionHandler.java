@@ -2,6 +2,8 @@ package com.example.FirstApp.Exceptions.ExceptionHandlers;
 
 import com.example.FirstApp.Exceptions.ApiError;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
+import io.jsonwebtoken.MalformedJwtException;
+import org.codehaus.jackson.JsonParseException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import javax.validation.Path.Node;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashSet;
 import java.util.Set;
 

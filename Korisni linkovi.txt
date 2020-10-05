@@ -33,13 +33,26 @@ SECURITY
 		+ !!!! Log Out problem nije rijesio !!!!
 
 	- JWT WHY NOT - https://www.youtube.com/watch?v=dgg1dvs0Bn4  + links in description
-other tmp delete:
 
-	https://www.youtube.com/watch?v=926mknSW9Lo
-	https://www.youtube.com/watch?v=soGRyl9ztjI
-	https://www.youtube.com/watch?v=SLc3cTlypwM
-	https://www.youtube.com/watch?v=dq39w4MiZzs
-	* https://www.youtube.com/watch?v=-Z57Ss_uiuc
 
-https://www.baeldung.com/rest-api-spring-oauth2-angular
+	- Authentication as a Microservice 50 min, pa cu ovo nakon sto sve uradim.      - https://www.youtube.com/watch?v=SLc3cTlypwM  
+	- beze, nije mi se nesto dopao pegla 50 minuta 	mozda kad uradim.		- https://www.youtube.com/watch?v=dq39w4MiZzs
+	- REFRESH TOKEN	***	+ komentari fini					- https://www.youtube.com/watch?v=-Z57Ss_uiuc
+
+	- FANTASTICAN PRIMJER JWT spring boot 						- https://www.youtube.com/watch?v=X80nJ5T7YpE 10:00  Zasad ISKUCANO
+				+ALI NEMA ROLE UKLJUCENE ZA POSEBNE API ENDPOINTE 
+
+
+https://www.baeldung.com/rest-api-spring-oauth2-angular 
 https://www.baeldung.com/spring-security-oauth-jwt
+________________________________________________________________________________________________
+
+
+CITAJ DOLE
+
+
+
+####################3V   warning warning warning   
+
+PRAVOOO BITNO. CUSTOM EXCEPTION NE HVATA ZATO STO DODE PRIJE SERVLET DISPECHERA. PROCITAJ SPRING KNJIGU HITNO. POCNI CITAT SVE TE DETALJE DA TO SKONTAS
+I IZ TOG RAZLOGA SE DESI PRIUJE NEGO UOPSTE DODE DO KONTROLERA (ZATO U FILTERU NE RADI)

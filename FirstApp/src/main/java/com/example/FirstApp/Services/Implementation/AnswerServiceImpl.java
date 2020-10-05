@@ -9,8 +9,13 @@ import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Repositories.QuestionRepository;
 import com.example.FirstApp.Services.Interface.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +70,8 @@ public class AnswerServiceImpl implements AnswerService {
     answer.setQuestion(questionRepository.findById(idQuestion).get());
     return answerRepository.save(answer);
     }
+
+
     //###########################3
 
 }
