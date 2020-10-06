@@ -6,6 +6,7 @@ import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Services.Interface.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +25,16 @@ public class AnswerController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<AnswerResponseDto> getAllAnswers()
     {
         return answerService.getAllAnswers();
     }
 
+
     @GetMapping(path="/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public AnswerResponseDto getAnswerById(@PathVariable(value = "id") Long id)
     {
         return answerService.getAnswerById(id);

@@ -11,6 +11,7 @@ import com.example.FirstApp.OnUpdate;
 import com.example.FirstApp.Services.Interface.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class QuestionController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public  List<QuestionResponseDto> getAllQuestions ()
     {
         return questionService.getAllQuestions();
@@ -37,6 +39,7 @@ public class QuestionController {
 
     @GetMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public QuestionResponseDto getQuestionById(@PathVariable(value = "id") Long id)
     {
         return questionService.getQuestionById(id);
@@ -45,6 +48,7 @@ public class QuestionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Validated(OnCreate.class)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public QuestionResponseDto addQuestion (@Valid @RequestBody QuestionRequestDto questionRequestDto)
     {
         return questionService.addQuestion(questionRequestDto);
@@ -53,6 +57,7 @@ public class QuestionController {
     @PostMapping (value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @Validated(OnCreate.class)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public AnswerResponseDto addAnswer (@PathVariable(value = "id") Long id, @Valid @RequestBody AnswerRequestDto answerRequestDto)
     {
         return questionService.addAnswer(id,answerRequestDto);
@@ -60,6 +65,7 @@ public class QuestionController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void  deleteAllQuestions ()
     {
          questionService.deleteAllQuestion();
@@ -67,6 +73,7 @@ public class QuestionController {
 
     @DeleteMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void  deleteQuestionById (@PathVariable(value = "id") Long id)
     {
         questionService.deleteQuestionById(id);
@@ -74,6 +81,7 @@ public class QuestionController {
 
     @DeleteMapping(path = "/{id}/answers/{idAnswer}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteQuestionAnswerById (@PathVariable(value = "id") Long id,@PathVariable(value = "idAnswer") Long idAnswer)
     {
         questionService.deleteQuestionAnswerByIdAnswer(id,idAnswer);
@@ -82,6 +90,7 @@ public class QuestionController {
     @PutMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Validated(OnUpdate.class)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public QuestionResponseDto editQuestionById(@PathVariable(value = "id") Long id, @Valid @RequestBody QuestionRequestDto questionRequestDto)
     {
         return questionService.editQuestionById(id, questionRequestDto);

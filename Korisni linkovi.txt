@@ -42,6 +42,7 @@ SECURITY
 	- FANTASTICAN PRIMJER JWT spring boot 						- https://www.youtube.com/watch?v=X80nJ5T7YpE 10:00  Zasad ISKUCANO
 				+ALI NEMA ROLE UKLJUCENE ZA POSEBNE API ENDPOINTE 
 
++++ like this: https://medium.com/@.jlabs/testing-spring-boot-application-secured-with-json-web-tokens-using-rest-assured-library-d6fdb19d2e70
 
 https://www.baeldung.com/rest-api-spring-oauth2-angular 
 https://www.baeldung.com/spring-security-oauth-jwt

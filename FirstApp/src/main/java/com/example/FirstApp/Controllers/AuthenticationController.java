@@ -7,6 +7,7 @@ import com.example.FirstApp.Models.AuthenticationResponse;
 import com.example.FirstApp.MyUserDetailservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,7 @@ public class AuthenticationController {
     JwtUtil jwtTokenUtil;
 
     @PostMapping(value = "/authenticate")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws  Exception
     {
         try
@@ -47,9 +49,12 @@ public class AuthenticationController {
     }
 
     @GetMapping(value="/test/{userName}")
+    @PreAuthorize("#userName == authentication.name")
     public String testAuthoritiesPerProfile(@RequestBody AuthenticationRequest authenticationRequest,@PathVariable(value = "userName") String userName) throws  Exception
     {
         return userName;
     }
+
+
 
 }

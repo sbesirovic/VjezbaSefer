@@ -7,10 +7,12 @@ import com.example.FirstApp.Dto.QuestionRequestDto;
 import com.example.FirstApp.Dto.QuestionResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
+import org.springframework.security.access.annotation.Secured;
 
 import java.util.List;
 
 public interface QuestionService {
+
     List<QuestionResponseDto> getAllQuestions();
     QuestionResponseDto addQuestion (QuestionRequestDto questionRequestDto);
     void deleteAllQuestion();

@@ -18,11 +18,12 @@ public class MyUserDetailservice implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
+        // ovdje bi kroy db provjeravat trebao
+
         if(userName.equals("adminProfile"))
         {
             List<SimpleGrantedAuthority> list = new ArrayList<SimpleGrantedAuthority>();
             list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            list.add(new SimpleGrantedAuthority("ROLE_USER"));
             return new User("adminProfile","adminpw",list); // sad prije 8 20 mogao bi za get i post dva razlicita ?
         }
         else if(userName.equals("userProfile"))
@@ -30,7 +31,8 @@ public class MyUserDetailservice implements UserDetailsService {
             List<SimpleGrantedAuthority> list = new ArrayList<SimpleGrantedAuthority>();
             list.add(new SimpleGrantedAuthority("ROLE_USER"));
             return new User("userProfile","userpw",list); // sad prije 8 20 mogao bi za get i post dva razlicita ?
-        } else throw new UsernameNotFoundException("nema username taj");
+        }
+        else throw new UsernameNotFoundException("Username "+userName +" doesn't exists");
 
     }
 }
