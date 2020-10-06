@@ -39,11 +39,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+
                 /*.antMatchers("/answers").hasRole("USER")
                 .antMatchers("/questions").hasRole("ADMIN")*/
                 //.antMatchers("/test/{userName}/**").access("@userSecurity.hasUserName(authentication,#userName)") // principals u servisima drugi nacin google it.
-                .antMatchers("/authenticate").permitAll()
-                .anyRequest().authenticated()//? 1.
+
+                //.antMatchers("/authenticate").permitAll()   // dopusta na toj ruti svima pristup
+                //.anyRequest().authenticated()               //  zahtjeva da svaka ruta mora imati autorizaciju (eventualno sa @preauthorize
+
+                .anyRequest().permitAll() // Sve koje nemaju @Preauthorize ili ovdje naglaseno prolaze //ili ovo ili te dvije linije izna da ne budu//
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -1,11 +1,7 @@
 //#TO DO
 			
 
-TODONEXT : KAKO DA GET I POST JEDAN DAS DRUGI NEDAS USERU	
-
-1. Popravi ovo da ne bude u securityConfigureru vec na kontroleru pristup rolama, i jednoj stavi da mogu pristupat i admini i useri, a drugoj samo admini npr.
-?!1. Pitaj ono authenticated() any request ne ide nikako uz authenticate parmitAll jer onda  i ovaj mora slat pravi token. Jedino da ga izbacim te dopustim svim rutama koje nemaju @PreAuth ulazak svima, ili 
-
+TODONEXT:
 					
 3. DTO prebaciti u drugi projekat buildat jar pa ukljuciti dependency u pom za ovaj projekat da koristis te DTO jer se cesto to koristi uraksi
 
