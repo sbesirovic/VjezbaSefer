@@ -1,27 +1,23 @@
 package com.example.FirstApp.Services.Implementation;
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Dto.Mapper.AnswerDtoMapper;
 import com.example.FirstApp.Dto.Mapper.QuestionDtoMapper;
-import com.example.FirstApp.Dto.QuestionRequestDto;
-import com.example.FirstApp.Dto.QuestionResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
 import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Repositories.QuestionRepository;
 import com.example.FirstApp.Services.Interface.QuestionService;
+import com.vjezba.DTO.AnswerRequestDto;
+import com.vjezba.DTO.AnswerResponseDto;
+import com.vjezba.DTO.QuestionRequestDto;
+import com.vjezba.DTO.QuestionResponseDto;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.*;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service

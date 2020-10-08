@@ -1,21 +1,18 @@
 package com.example.FirstApp.Controllers;
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
-import com.example.FirstApp.Dto.QuestionRequestDto;
-import com.example.FirstApp.Dto.QuestionResponseDto;
-import com.example.FirstApp.Entities.Answer;
-import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.OnCreate;
 import com.example.FirstApp.OnUpdate;
 import com.example.FirstApp.Services.Interface.QuestionService;
+import com.vjezba.DTO.AnswerRequestDto;
+import com.vjezba.DTO.AnswerResponseDto;
+import com.vjezba.DTO.QuestionRequestDto;
+import com.vjezba.DTO.QuestionResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 

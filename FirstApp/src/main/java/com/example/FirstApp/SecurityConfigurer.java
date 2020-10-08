@@ -48,6 +48,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 //.anyRequest().authenticated()               //  zahtjeva da svaka ruta mora imati autorizaciju (eventualno sa @preauthorize
 
                 .anyRequest().permitAll() // Sve koje nemaju @Preauthorize ili ovdje naglaseno prolaze //ili ovo ili te dvije linije izna da ne budu//
+
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

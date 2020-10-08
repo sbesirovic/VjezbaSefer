@@ -1,21 +1,16 @@
 package com.example.FirstApp.Services.Implementation;
 
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Dto.Mapper.AnswerDtoMapper;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Repositories.QuestionRepository;
 import com.example.FirstApp.Services.Interface.AnswerService;
+import com.vjezba.DTO.AnswerRequestDto;
+import com.vjezba.DTO.AnswerResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

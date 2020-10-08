@@ -2,7 +2,6 @@ package com.example.FirstApp.AnswerTest;
 
 
 
-import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
 import com.example.FirstApp.FirstAppApplication;
@@ -13,13 +12,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.assertj.core.api.Assertions;
+import com.vjezba.DTO.AnswerResponseDto;
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.verification.VerificationMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

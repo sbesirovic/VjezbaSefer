@@ -1,9 +1,7 @@
 package com.example.FirstApp.Controllers;
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
-import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Services.Interface.AnswerService;
+import com.vjezba.DTO.AnswerResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;

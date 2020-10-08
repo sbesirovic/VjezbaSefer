@@ -3,13 +3,13 @@
 
 TODONEXT:
 					
-3. DTO prebaciti u drugi projekat buildat jar pa ukljuciti dependency u pom za ovaj projekat da koristis te DTO jer se cesto to koristi uraksi
 
-4KUCI. detaljnije proc kroz jwt uradeno context security, ono je bitno
+*** detaljnije proc kroz jwt uradeno context security, ono je bitno
+	+++ AUTHENTICATE RUTA MORA DA IGNORISEEE BILO KAKAV HEADER AUTHORIZATION I NE TREBA BACATI IZUZETKE STA GOD TAMO BILO !!!
 
 @autowired detaljnije izuciti, prednosti mane
 
-
+<scope> provjeriti one vrste sta koja radi i tako oko dependency
 
 _________________________________
 

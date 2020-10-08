@@ -1,8 +1,8 @@
 package com.example.FirstApp.Services.Interface;
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Entities.Answer;
+import com.vjezba.DTO.AnswerRequestDto;
+import com.vjezba.DTO.AnswerResponseDto;
 
 import java.util.List;
 

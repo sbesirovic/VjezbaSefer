@@ -1,12 +1,11 @@
 package com.example.FirstApp.Dto.Mapper;
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
 import com.example.FirstApp.Entities.Answer;
+import com.vjezba.DTO.AnswerRequestDto;
+import com.vjezba.DTO.AnswerResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 

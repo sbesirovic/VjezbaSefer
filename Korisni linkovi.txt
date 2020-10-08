@@ -46,7 +46,10 @@ SECURITY
 
 https://www.baeldung.com/rest-api-spring-oauth2-angular 
 https://www.baeldung.com/spring-security-oauth-jwt
-________________________________________________________________________________________________
+_________________________________________________________________________________
+
+
+https://spring.io/guides/gs/multi-module/  tmp_______________
 
 
 CITAJ DOLE

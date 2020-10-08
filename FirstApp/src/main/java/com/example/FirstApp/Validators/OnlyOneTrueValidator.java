@@ -1,14 +1,11 @@
 package com.example.FirstApp.Validators;
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
 import com.example.FirstApp.Entities.Answer;
-import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.Repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Optional;
 
 public class OnlyOneTrueValidator implements ConstraintValidator<OnlyOneTrue, Answer> {
 

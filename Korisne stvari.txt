@@ -1,0 +1,10 @@
+
+# BUILD YOUR OWN LIBRARY
+
+C:\Users\User\.m2\repository\   je repozitorij gdje build treba da spasava biblioteke kako bi dependency ucitao po defaultu. Oni stave valjda drugaciji managment ucitavaja dependency.
+Group Id 	se smatra glavnim folderom.
+Artifact id 	podfolder tog foldera za razlicite komponente
+Version 	podfolderi artifacta koji bi pretstavljao razlicite verzije tog artifacta(te komponente) biblioteke
+++++ Promjenom Verzije u Library folderu, ne brisu se stare postavljene stvari, vec klijent koji je koristi u dependency kada mjenja verziju tacno tako i ucitava
+	onu verziju koja mu je potrebna. (Onaj ko pravi treba takode imati razlicite verzije implementacija library a ne da original mjenja kako bi dao novu verziju...)
+

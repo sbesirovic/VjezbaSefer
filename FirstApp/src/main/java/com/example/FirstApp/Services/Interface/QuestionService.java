@@ -1,13 +1,10 @@
 package com.example.FirstApp.Services.Interface;
 
 
-import com.example.FirstApp.Dto.AnswerRequestDto;
-import com.example.FirstApp.Dto.AnswerResponseDto;
-import com.example.FirstApp.Dto.QuestionRequestDto;
-import com.example.FirstApp.Dto.QuestionResponseDto;
-import com.example.FirstApp.Entities.Answer;
-import com.example.FirstApp.Entities.Question;
-import org.springframework.security.access.annotation.Secured;
+import com.vjezba.DTO.AnswerRequestDto;
+import com.vjezba.DTO.AnswerResponseDto;
+import com.vjezba.DTO.QuestionRequestDto;
+import com.vjezba.DTO.QuestionResponseDto;
 
 import java.util.List;
 
