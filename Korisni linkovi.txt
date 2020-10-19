@@ -46,13 +46,16 @@ SECURITY
 
 https://www.baeldung.com/rest-api-spring-oauth2-angular 
 https://www.baeldung.com/spring-security-oauth-jwt
+
+SWAGGER (vs postman)
+	- [VIDEO] Implementacija u spring boot, a ima i prije tog opcenito o swaggeru 		- https://www.youtube.com/watch?v=oJSFdqE7Tpo
+	- Spring boot with swagger 2 BAELDUNG							- https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
+
+
+
+
 _________________________________________________________________________________
 
-
-https://spring.io/guides/gs/multi-module/  tmp_______________
-
-
-CITAJ DOLE
 
 
 

@@ -18,7 +18,7 @@ public class MyUserDetailservice implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-        // ovdje bi kroy db provjeravat trebao
+        // ovdje bi kroz db provjeravat trebao
 
         if(userName.equals("adminProfile"))
         {

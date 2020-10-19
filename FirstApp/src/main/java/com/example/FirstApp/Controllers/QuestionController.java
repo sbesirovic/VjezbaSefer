@@ -7,6 +7,8 @@ import com.vjezba.DTO.AnswerRequestDto;
 import com.vjezba.DTO.AnswerResponseDto;
 import com.vjezba.DTO.QuestionRequestDto;
 import com.vjezba.DTO.QuestionResponseDto;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +28,7 @@ public class QuestionController {
     private QuestionService questionService;
 
 
+    //@ApiOperation(value = "", authorizations = { @Authorization(value="Bearer") })   ako ne postavim security context u swaggerConfig klasi
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -33,6 +36,7 @@ public class QuestionController {
     {
         return questionService.getAllQuestions();
     }
+
 
     @GetMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.OK)

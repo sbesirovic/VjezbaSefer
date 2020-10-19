@@ -5,6 +5,7 @@ import com.example.FirstApp.JwtUtil;
 import com.example.FirstApp.Models.AuthenticationRequest;
 import com.example.FirstApp.Models.AuthenticationResponse;
 import com.example.FirstApp.MyUserDetailservice;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +29,14 @@ public class AuthenticationController {
 
     @PostMapping(value = "/authenticate")
     @PreAuthorize("permitAll()")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws  Exception
+    @ApiOperation(value = "Create JWT", notes = "This method creates a Json Web Token for user sent in parameter")
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(
+            @ApiParam(name =  "LogInData", value = "Access Data of the user", /*example = "{\n" +
+                    "  \"password\": \"ca1234\",\n" +
+                    "  \"username\": \"ca1234\"\n" +
+                    "}",*/ required = true)         //  % Type && Example don't work with @RequestBody
+            @RequestBody
+             AuthenticationRequest authenticationRequest) throws  Exception
     {
         try
         {
@@ -50,7 +58,8 @@ public class AuthenticationController {
 
     @GetMapping(value="/test/{userName}")
     @PreAuthorize("#userName == authentication.name")
-    public String testAuthoritiesPerProfile(@RequestBody AuthenticationRequest authenticationRequest,@PathVariable(value = "userName") String userName) throws  Exception
+    public String testAuthoritiesPerProfile(
+            @RequestBody AuthenticationRequest authenticationRequest, @PathVariable(value = "userName") String userName) throws  Exception
     {
         return userName;
     }

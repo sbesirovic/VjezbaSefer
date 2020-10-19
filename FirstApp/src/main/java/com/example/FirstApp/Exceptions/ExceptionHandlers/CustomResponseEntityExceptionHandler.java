@@ -68,7 +68,7 @@ public class CustomResponseEntityExceptionHandler  extends ResponseEntityExcepti
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    protected ResponseEntity<Object>  onConstraintValidationException(ConstraintViolationException ex)
+    protected ResponseEntity<Object>  handleConstraintValidationException(ConstraintViolationException ex)
     {
         //MethodArgumentNotValidException exp = ex;
         String error = "Validation problem: "; // moras detaljnije sa vise podataka kasnije to ApiError
@@ -92,8 +92,8 @@ public class CustomResponseEntityExceptionHandler  extends ResponseEntityExcepti
     }
 
     @ExceptionHandler({ TransactionSystemException.class }) // because service layer made a mistake, then return transactional exception back.
-    public ResponseEntity<Object> handleConstraintViolation(Exception ex, WebRequest request) {
-        Throwable cause = ((TransactionSystemException) ex).getRootCause();
+    public ResponseEntity<Object> handleTransactionSystem(TransactionSystemException ex, WebRequest request) {
+        Throwable cause = ex.getRootCause();
         Set<ConstraintViolation<?>> constraintViolations = new HashSet<>();
         if (cause instanceof ConstraintViolationException) {
             constraintViolations = ((ConstraintViolationException) cause).getConstraintViolations();
@@ -101,7 +101,7 @@ public class CustomResponseEntityExceptionHandler  extends ResponseEntityExcepti
         return buildResponseEntity(new ApiError(HttpStatus.EXPECTATION_FAILED,"LOWER LAYER MISTAKE: "+constraintViolations.toString(),ex));
     }
 
-    @ExceptionHandler({ IllegalArgumentException.class }) // because service layer made a mistake, then return transactional exception back.
+    @ExceptionHandler({ IllegalArgumentException.class }) // nez jel ovo ikad uhvaceno
     public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex, WebRequest request) {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST,"Output Not Implemented",ex));
     }

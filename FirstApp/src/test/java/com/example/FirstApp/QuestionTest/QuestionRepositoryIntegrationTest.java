@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FirstAppApplication.class)
-
 public class QuestionRepositoryIntegrationTest {
 
 
