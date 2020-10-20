@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface AnswerService {
     List<AnswerResponseDto> getAllAnswers();
-    AnswerResponseDto getAnswerById(Long id);
+    AnswerResponseDto getAnswerById(String id);
     AnswerResponseDto addAnswer (AnswerRequestDto answer);
-    Answer connectAnswerWithQuestion(Long id, Long idQuestion);
+    Answer connectAnswerWithQuestion(String id, String idQuestion);
+    void deleteAnswerById(String id);
 }

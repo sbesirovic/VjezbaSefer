@@ -1,18 +1,17 @@
 package com.example.FirstApp.AnswerTest;
 
+import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.FirstAppApplication;
 
-
-import com.example.FirstApp.JwtUtil;
 import com.example.FirstApp.Models.AuthenticationRequest;
+import com.example.FirstApp.Repositories.AnswerRepository;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
+
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
-import io.restassured.response.Response;
+import org.bson.types.ObjectId;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +19,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.boot.web.server.LocalServerPort;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
 
+
+
+//@DataMongoTest   MISLIM DA OVO ONDA ZABLOKIRA REST ASSURED @ I NE DOBIJAM PORT KAKAV BI TREBAO I NE MOZE KONEKCIJA
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FirstAppApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 public class AnswerControllerWebIntegrationTest {
+
+    @Autowired
+    private AnswerRepository answerRepository;
 
     @LocalServerPort
     private int port;
@@ -45,9 +42,11 @@ public class AnswerControllerWebIntegrationTest {
     @Before
     public void setUp() throws Exception {
         RestAssured.port = port;
+        testId = answerRepository.save(new Answer("answ1",true)).getId();
     }
 
     private String token = "";
+    private String testId;
 
     @Test
     public void whenAdminRequestedGetAnswers_thenOK()
@@ -58,7 +57,6 @@ public class AnswerControllerWebIntegrationTest {
         list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         setTokenVol2(new User("adminProfile","adminpw",list));
         */
-
 
         given().header("Authorization", "Bearer "+token)
                 .get("/answers").then()
@@ -85,7 +83,7 @@ public class AnswerControllerWebIntegrationTest {
         setToken(new AuthenticationRequest("adminProfile","adminpw"));
 
         given().header("Authorization", "Bearer "+token).
-        when().request("GET", "/answers/1").then().statusCode(200);
+                when().request("GET", "/answers/"+testId).then().statusCode(200);
     }
 
     @Test
@@ -94,7 +92,7 @@ public class AnswerControllerWebIntegrationTest {
         setToken(new AuthenticationRequest("adminProfile","adminpw"));
 
         given().header("Authorization", "Bearer "+token).
-        when().request("GET", "/answers/656").then().statusCode(404);
+                when().request("GET", "/answers/656").then().statusCode(404);
     }
 
     @Test
@@ -103,8 +101,8 @@ public class AnswerControllerWebIntegrationTest {
         setToken(new AuthenticationRequest("adminProfile","adminpw"));
 
         given().header("Authorization", "Bearer "+token).
-        when().request("GET", "/answers/1").then().statusCode(200)
-                .body("id",equalTo(1),"correct",equalTo(true));
+                when().request("GET", "/answers/"+testId).then().statusCode(200)
+                .body("id",equalTo(testId),"correct",equalTo(true));
     }
 
 
@@ -112,7 +110,7 @@ public class AnswerControllerWebIntegrationTest {
 
     private void setToken(AuthenticationRequest authenticationRequest)
     {
-       token =  given()
+        token =  given()
                 .contentType(ContentType.JSON)
                 .body(authenticationRequest)
                 .when()
@@ -130,6 +128,4 @@ public class AnswerControllerWebIntegrationTest {
     }
     */
 
-
 }
-

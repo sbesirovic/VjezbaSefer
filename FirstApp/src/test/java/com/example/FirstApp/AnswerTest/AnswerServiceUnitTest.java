@@ -51,19 +51,19 @@ public class AnswerServiceUnitTest {
     @Test(expected = EntityNotFoundException.class)
     public void getAnswerByIdTestException()
     {
-        when(answerRepository.findById(12L)).thenThrow(new EntityNotFoundException("Answer with id 12 doesn't exist"));
+        when(answerRepository.findById("12L")).thenThrow(new EntityNotFoundException("Answer with id 12 doesn't exist"));
 
-        answerService.getAnswerById(12L);
+        answerService.getAnswerById("12L");
     }
 
     @Test
     public void getAnswerByIdTestCaughtException()
     {
-        when(answerRepository.findById(12L)).thenThrow(new EntityNotFoundException("Answer with id 12 doesn't exist"));
+        when(answerRepository.findById("12L")).thenThrow(new EntityNotFoundException("Answer with id 12 doesn't exist"));
 
         try
         {
-            answerService.getAnswerById(12L);
+            answerService.getAnswerById("12L");
         }
         catch(Exception ex)
         {
@@ -75,9 +75,9 @@ public class AnswerServiceUnitTest {
     @Test
     public void getAnswerByIdTest()
     {
-        when(answerRepository.findById(13L)).thenReturn(Optional.of(new Answer("Answer of the question", false)));
+        when(answerRepository.findById("13L")).thenReturn(Optional.of(new Answer("Answer of the question", false)));
 
-        assertEquals(  answerService.getAnswerById(13L).getText(),"Answer of the question"  );
+        assertEquals(  answerService.getAnswerById("13L").getText(),"Answer of the question"  );
         //assertThat(answerService.getAnswerById(13L).getText(),is("Answer of the question"));  -> DEPRECATED
         // verify(userRepository).findOne(1l) == verify(userRepository,times(1)).findOne(1l) -> rep je pozvao metodu findOne(1l ###? jel bas broji sa id 1 ili ce pikat i ostale ?) ### 1 put.
     }

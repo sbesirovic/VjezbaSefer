@@ -2,17 +2,20 @@ package com.example.FirstApp.Entities;
 
 
 import com.example.FirstApp.OnCreate;
-import com.example.FirstApp.Validators.OnlyOneTrue;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 //import org.hibernate.validator.constraints.NotEmpty; // promjenio dependency starter spring validation umjesto hibernate validation i radi sada normala notEmpty i notblank
+import java.util.ArrayList;
+
 import java.util.List;
 
+@Document
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Question {
@@ -20,7 +23,7 @@ public class Question {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.PROTECTED)
-    private Long id;
+    private String id;
 
     @Version
     //@JsonProperty nije potrebno vise radi DTO-ova
@@ -40,12 +43,16 @@ public class Question {
     private String questionText;
 
 
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL,},fetch = FetchType.LAZY/*,targetEntity = Answer.class*/)
+    //@OneToMany(mappedBy = "question", cascade = {CascadeType.ALL,},fetch = FetchType.LAZY/*,targetEntity = Answer.class*/)
     @Size(max = 4, message = "This Question already has 4 answers."/*,groups = {OnCreate.class}*/)
     //@OnlyOneTrue
-    private List<Answer> answers;
+    //@DBRef later 100%
+    private List<Answer> answers = new ArrayList<Answer>();
 
-
+    public Question(@Max(value = 15, message = "Level must be less then 16") @Min(value = 1, message = "Level must be greater then 0") @NotNull @NonNull Integer level, @NotBlank(message = "Question text must be entered", groups = {OnCreate.class}) String questionText) {
+        this.level = level;
+        this.questionText = questionText;
+    }
 
     public void setAnswer(Answer answer) // za fk dodano
     {

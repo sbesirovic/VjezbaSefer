@@ -41,7 +41,7 @@ public class QuestionController {
     @GetMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public QuestionResponseDto getQuestionById(@PathVariable(value = "id") Long id)
+    public QuestionResponseDto getQuestionById(@PathVariable(value = "id") String id)
     {
         return questionService.getQuestionById(id);
     }
@@ -59,7 +59,7 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.CREATED)
     @Validated(OnCreate.class)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public AnswerResponseDto addAnswer (@PathVariable(value = "id") Long id, @Valid @RequestBody AnswerRequestDto answerRequestDto)
+    public AnswerResponseDto addAnswer (@PathVariable(value = "id") String id, @Valid @RequestBody AnswerRequestDto answerRequestDto)
     {
         return questionService.addAnswer(id,answerRequestDto);
     }
@@ -75,7 +75,7 @@ public class QuestionController {
     @DeleteMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void  deleteQuestionById (@PathVariable(value = "id") Long id)
+    public void  deleteQuestionById (@PathVariable(value = "id") String id)
     {
         questionService.deleteQuestionById(id);
     }
@@ -83,7 +83,7 @@ public class QuestionController {
     @DeleteMapping(path = "/{id}/answers/{idAnswer}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestionAnswerById (@PathVariable(value = "id") Long id,@PathVariable(value = "idAnswer") Long idAnswer)
+    public void deleteQuestionAnswerById (@PathVariable(value = "id") String id,@PathVariable(value = "idAnswer") String idAnswer)
     {
         questionService.deleteQuestionAnswerByIdAnswer(id,idAnswer);
     }
@@ -92,7 +92,7 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.OK)
     @Validated(OnUpdate.class)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") Long id, @Valid @RequestBody QuestionRequestDto questionRequestDto)
+    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") String id, @Valid @RequestBody QuestionRequestDto questionRequestDto)
     {
         return questionService.editQuestionById(id, questionRequestDto);
     }
