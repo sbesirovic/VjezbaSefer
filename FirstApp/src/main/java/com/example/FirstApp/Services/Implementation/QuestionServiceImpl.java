@@ -12,6 +12,7 @@ import com.vjezba.DTO.AnswerRequestDto;
 import com.vjezba.DTO.AnswerResponseDto;
 import com.vjezba.DTO.QuestionRequestDto;
 import com.vjezba.DTO.QuestionResponseDto;
+import org.bson.types.ObjectId;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public QuestionResponseDto editQuestionById(Long id, QuestionRequestDto questionRequestDto) {
+    public QuestionResponseDto editQuestionById(ObjectId id, QuestionRequestDto questionRequestDto) {
 
 
         Optional<Question> optionalQuestion = questionRepository.findById(id);
@@ -86,7 +87,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionResponseDto getQuestionById(Long id) {
+    public QuestionResponseDto getQuestionById(ObjectId id) {
         Optional<Question> optionalQuestion = questionRepository.findById(id);
         if(optionalQuestion.isPresent())
         {
@@ -96,17 +97,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void deleteQuestionById(Long id) {
+    public void deleteQuestionById(ObjectId id) {
         Optional<Question> optionalQuestion = questionRepository.findById(id);
         if(optionalQuestion.isPresent())
         {
             questionRepository.deleteById(id);
         }
-        else throw new EntityNotFoundException("Answer with {id="+id+"} doesn't exist");
+        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
     @Override
-    public AnswerResponseDto addAnswer(Long id, AnswerRequestDto answerRequestDto) {
+    public AnswerResponseDto addAnswer(ObjectId id, AnswerRequestDto answerRequestDto) {
 
         Optional<Question> optionalQuestion = questionRepository.findById(id);
         if(optionalQuestion.isPresent())
@@ -116,10 +117,12 @@ public class QuestionServiceImpl implements QuestionService {
 //BUSSINES LOGIC   SA SAMO JEDNIM TACNIM ODGOVOROM, TAKVI VLAIDATORI SE U PRINCIPU ROIJETKO PRAVE. BITNO DA ZNAS SNOVNE I ONE KAD SE KRIZAJU...
 // neki QuestionValidator i AnswerValidatorHelper da ne bi ovdje sad imao kod, samo pozovem metode validacije il tako nesto.
 
-
-            question.setAnswer(answer);
-            answer.setQuestion(question);
-            answerRepository.save(answer);
+            //answer.setQuestion(question);
+            Answer anw =  answerRepository.save(answer);
+            question.setAnswer(anw);
+            //anw.setQuestion(null);
+            questionRepository.save(question);
+            // !? 50% ?   NE SACUVA SAM- pa ja moram oba repozitorija koristiti dok je za mysql jedan save indirektno spasavao oba. Ima li kakav atribut da sam to radi (mada ja svakako volim vise sam)
 
             return answerDtoMapper.answerToResponseAnswer(answer);
         }
@@ -128,8 +131,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void deleteQuestionAnswerByIdAnswer(Long id, Long idAnswer) {
-        System.out.println("da prvo DTO zavrsim pa cu ovo");
+    public void deleteQuestionAnswerByIdAnswer(ObjectId id, ObjectId idAnswer) {
+        System.out.println("Not implemented");
         return ;
     }
 }

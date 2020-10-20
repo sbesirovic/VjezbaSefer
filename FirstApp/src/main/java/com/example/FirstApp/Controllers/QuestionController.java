@@ -9,6 +9,7 @@ import com.vjezba.DTO.QuestionRequestDto;
 import com.vjezba.DTO.QuestionResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +42,7 @@ public class QuestionController {
     @GetMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public QuestionResponseDto getQuestionById(@PathVariable(value = "id") Long id)
+    public QuestionResponseDto getQuestionById(@PathVariable(value = "id") ObjectId id)
     {
         return questionService.getQuestionById(id);
     }
@@ -59,7 +60,7 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.CREATED)
     @Validated(OnCreate.class)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public AnswerResponseDto addAnswer (@PathVariable(value = "id") Long id, @Valid @RequestBody AnswerRequestDto answerRequestDto)
+    public AnswerResponseDto addAnswer (@PathVariable(value = "id") ObjectId id, @Valid @RequestBody AnswerRequestDto answerRequestDto)
     {
         return questionService.addAnswer(id,answerRequestDto);
     }
@@ -75,7 +76,7 @@ public class QuestionController {
     @DeleteMapping (path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void  deleteQuestionById (@PathVariable(value = "id") Long id)
+    public void  deleteQuestionById (@PathVariable(value = "id") ObjectId id)
     {
         questionService.deleteQuestionById(id);
     }
@@ -83,7 +84,7 @@ public class QuestionController {
     @DeleteMapping(path = "/{id}/answers/{idAnswer}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestionAnswerById (@PathVariable(value = "id") Long id,@PathVariable(value = "idAnswer") Long idAnswer)
+    public void deleteQuestionAnswerById (@PathVariable(value = "id") ObjectId id,@PathVariable(value = "idAnswer") ObjectId idAnswer)
     {
         questionService.deleteQuestionAnswerByIdAnswer(id,idAnswer);
     }
@@ -92,7 +93,7 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.OK)
     @Validated(OnUpdate.class)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") Long id, @Valid @RequestBody QuestionRequestDto questionRequestDto)
+    public QuestionResponseDto editQuestionById(@PathVariable(value = "id") ObjectId id, @Valid @RequestBody QuestionRequestDto questionRequestDto)
     {
         return questionService.editQuestionById(id, questionRequestDto);
     }

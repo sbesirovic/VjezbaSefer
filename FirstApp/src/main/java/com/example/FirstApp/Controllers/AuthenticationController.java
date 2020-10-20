@@ -1,10 +1,10 @@
 package com.example.FirstApp.Controllers;
 
 
-import com.example.FirstApp.JwtUtil;
+import com.example.FirstApp.Security.JwtUtil;
 import com.example.FirstApp.Models.AuthenticationRequest;
 import com.example.FirstApp.Models.AuthenticationResponse;
-import com.example.FirstApp.MyUserDetailservice;
+import com.example.FirstApp.Security.MyUserDetailservice;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.example.FirstApp;
+package com.example.FirstApp.Swagger;
 
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
