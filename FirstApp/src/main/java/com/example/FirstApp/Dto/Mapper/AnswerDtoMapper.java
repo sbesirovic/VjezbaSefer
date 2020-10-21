@@ -1,19 +1,25 @@
 package com.example.FirstApp.Dto.Mapper;
 
+import com.example.FirstApp.Dto.Mapper.MyPractice.Firstelement;
+import com.example.FirstApp.Dto.Mapper.MyPractice.helperClass;
 import com.example.FirstApp.Entities.Answer;
+import com.example.FirstApp.Entities.Question;
 import com.vjezba.DTO.AnswerRequestDto;
 import com.vjezba.DTO.AnswerResponseDto;
-import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+
+@Mapper(componentModel = "spring",uses = {helperClass.class})
 public interface AnswerDtoMapper {
 
     //AnswerDtoMapper INSTANCE = Mappers.getMapper(AnswerDtoMapper.class);
+@Autowired
+helperClass helper = null;
 
     @Mappings({
             @Mapping(target = "testiramDtoExplicit", source = "answer.practice",defaultExpression="java(-2L)"/*expression = "java(answer.getId()+13L)"*/),
@@ -27,4 +33,17 @@ public interface AnswerDtoMapper {
 
 
     List<AnswerResponseDto> answerListToAnswerResponseList(List<Answer> answerList);
+
+    /*
+        @Mapping( source = "answers", target = "answers",qualifiedBy = Firstelement.class)
+        TestClass QuestionToListAnswers(Question question );  iterable non iterable problems
+     */
+
+
+    @Mapping( source = "answers", target = "answers")
+    QuestionAnswersDto QuestionToListAnswers(Question question );
+
+
 }
+
+

@@ -1,14 +1,14 @@
-package com.example.FirstApp.AnswerTest;
+package com.example.FirstApp.QuestionTest;
 
 import com.example.FirstApp.Entities.Answer;
+import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.FirstAppApplication;
 
 import com.example.FirstApp.Models.AuthenticationRequest;
-import com.example.FirstApp.Repositories.AnswerRepository;
+import com.example.FirstApp.Repositories.QuestionRepository;
 import io.restassured.RestAssured;
 
 import io.restassured.http.ContentType;
-import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,10 +31,10 @@ import static org.hamcrest.Matchers.equalTo;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FirstAppApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-public class AnswerControllerWebIntegrationTest {
+public class QuestionControllerWebIntegrationTest {
 
     @Autowired
-    private AnswerRepository answerRepository;
+    private QuestionRepository questionRepository;
 
     @LocalServerPort
     private int port;
@@ -42,7 +42,7 @@ public class AnswerControllerWebIntegrationTest {
     @Before
     public void setUp() throws Exception {
         RestAssured.port = port;
-        testId = answerRepository.save(new Answer("answ1",true)).getId();
+        testId = questionRepository.save(new Question(12,"pitanje")).getId();
     }
 
     private String token = "";
@@ -59,31 +59,28 @@ public class AnswerControllerWebIntegrationTest {
         */
 
         given().header("Authorization", "Bearer "+token)
-                .get("/answers").then()
+                .get("/questions").then()
                 .statusCode(200);
 
     }
 
-    @Test
+    /*@Test  nema smisla za questione kopirano iz answera
     public void whenUserRequestedGetAnswers_thenForbiden()
     {
-
         setToken(new AuthenticationRequest("userProfile","userpw"));
 
         given().header("Authorization", "Bearer "+token)
-                .get("/answers").then()
+                .get("/questions").then()
                 .statusCode(403);
-
-    }
+    }*/
 
     @Test
     public void whenAdminRequestedGetAnswer_thenOK()
     {
-
         setToken(new AuthenticationRequest("adminProfile","adminpw"));
 
         given().header("Authorization", "Bearer "+token).
-                when().request("GET", "/answers/"+testId).then().statusCode(200);
+                when().request("GET", "/questions/"+testId).then().statusCode(200);
     }
 
     @Test
@@ -92,7 +89,7 @@ public class AnswerControllerWebIntegrationTest {
         setToken(new AuthenticationRequest("adminProfile","adminpw"));
 
         given().header("Authorization", "Bearer "+token).
-                when().request("GET", "/answers/656").then().statusCode(404);
+                when().request("GET", "/questions/656").then().statusCode(404);
     }
 
     @Test
@@ -101,8 +98,8 @@ public class AnswerControllerWebIntegrationTest {
         setToken(new AuthenticationRequest("adminProfile","adminpw"));
 
         given().header("Authorization", "Bearer "+token).
-                when().request("GET", "/answers/"+testId).then().statusCode(200)
-                .body("id",equalTo(testId),"correct",equalTo(true));
+                when().request("GET", "/questions/"+testId).then().statusCode(200)
+                .body("id",equalTo(testId),"level",equalTo(12));
     }
 
 

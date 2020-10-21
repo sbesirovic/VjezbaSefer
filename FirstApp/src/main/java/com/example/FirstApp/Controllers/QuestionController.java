@@ -1,5 +1,8 @@
 package com.example.FirstApp.Controllers;
 
+import com.example.FirstApp.Dto.Mapper.QuestionAnswersDto;
+import com.example.FirstApp.Entities.Answer;
+import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.OnCreate;
 import com.example.FirstApp.OnUpdate;
 import com.example.FirstApp.Services.Interface.QuestionService;
@@ -7,8 +10,6 @@ import com.vjezba.DTO.AnswerRequestDto;
 import com.vjezba.DTO.AnswerResponseDto;
 import com.vjezba.DTO.QuestionRequestDto;
 import com.vjezba.DTO.QuestionResponseDto;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +45,22 @@ public class QuestionController {
     public QuestionResponseDto getQuestionById(@PathVariable(value = "id") String id)
     {
         return questionService.getQuestionById(id);
+    }
+
+    @GetMapping (path = "/{id}/answers/{idAnswer}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public AnswerResponseDto getAnswerByIdFromQuestionId(@PathVariable(value = "id") String id, @PathVariable(value = "idAnswer") String idAnswer)
+    {
+        return questionService.getAnswerByIdFromQuestionById(id,idAnswer);
+    }
+
+    @GetMapping (path = "/{id}/answers")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public QuestionAnswersDto getAllAnswerByQuestionId(@PathVariable(value = "id") String id)
+    {
+        return questionService.getAllAnswersByQuestionId(id);
     }
 
     @PostMapping
@@ -96,6 +113,9 @@ public class QuestionController {
     {
         return questionService.editQuestionById(id, questionRequestDto);
     }
+
+
+
 
 
 

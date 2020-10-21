@@ -2,9 +2,7 @@ package com.example.FirstApp.QuestionTest;
 
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
-import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Repositories.QuestionRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -31,5 +29,14 @@ public class QuestionRepositoryMongoIntegrationTest {
         assertThat(questionRepository.findAll()).extracting("level").contains(2);
     }
 
+    /*
+    @Test
+    public void testAnswerRepositoryFindById() {
+        //when
+        Answer answerTrue =  answerRepository.save(new Answer("pitanje",true));
+        //then
+        assertThat(answerRepository.findById(answerTrue.getId()).get().getCorrect()).isEqualTo(true);
+    }
+    */
 
 }

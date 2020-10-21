@@ -1,11 +1,11 @@
 package com.example.FirstApp.Services.Implementation;
 
+import com.example.FirstApp.Dto.Mapper.QuestionAnswersDto;
 import com.example.FirstApp.Dto.Mapper.AnswerDtoMapper;
 import com.example.FirstApp.Dto.Mapper.QuestionDtoMapper;
 import com.example.FirstApp.Entities.Answer;
 import com.example.FirstApp.Entities.Question;
 import com.example.FirstApp.Exceptions.CustomExceptions.EntityNotFoundException;
-import com.example.FirstApp.Repositories.AnswerRepository;
 import com.example.FirstApp.Repositories.QuestionRepository;
 import com.example.FirstApp.Services.Interface.QuestionService;
 import com.vjezba.DTO.AnswerRequestDto;
@@ -24,24 +24,29 @@ import java.util.regex.Pattern;
 public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
-    private AnswerRepository answerRepository;
-
     private QuestionRepository questionRepository;
 
     @Autowired //
     private QuestionDtoMapper questionDtoMapper;// = Mappers.getMapper(com.example.FirstApp.Dto.Mapper.QuestionDtoMapper.class);
 
+
     private AnswerDtoMapper answerDtoMapper = Mappers.getMapper(AnswerDtoMapper.class);
 
-    @Autowired
-    public void setQuestionRepository( QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
+
+    @Override
+    public QuestionAnswersDto getAllAnswersByQuestionId(String id) {
+
+       Optional<Question>  q = questionRepository.findByIdWithoutAnswersCorrect(id);
+       //Optional<Question>  q = questionRepository.findById(id);   ovo vraca i tacnost (correct) odgovora
+       if(q.isPresent()) return answerDtoMapper.QuestionToListAnswers(q.get());
+       else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
     @Override
     public List<QuestionResponseDto> getAllQuestions() {
 
-        return questionDtoMapper.questionListToResponseQuestionList((List<Question>) questionRepository.findAll());
+        //return questionDtoMapper.questionListToResponseQuestionList((List<Question>) questionRepository.findByLevelAndQuestionText(13,"Question1?"));
+        return questionDtoMapper.questionListToResponseQuestionList((List<Question>) questionRepository.findAllWithoutAnswersCorrect());
     }
 
     @Override
@@ -87,7 +92,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionResponseDto getQuestionById(String id) {
-        Optional<Question> optionalQuestion = questionRepository.findById(id);
+        Optional<Question> optionalQuestion = questionRepository.findByIdWithoutAnswersCorrect(id);
         if(optionalQuestion.isPresent())
         {
             return questionDtoMapper.questionToResponseQuestion(optionalQuestion.get());
@@ -105,6 +110,7 @@ public class QuestionServiceImpl implements QuestionService {
         else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
+
     @Override
     public AnswerResponseDto addAnswer(String id, AnswerRequestDto answerRequestDto) {
 
@@ -113,15 +119,11 @@ public class QuestionServiceImpl implements QuestionService {
         {
             Question question = optionalQuestion.get();
             Answer answer = answerDtoMapper.requestAnswerToAnswer(answerRequestDto);
-//BUSSINES LOGIC   SA SAMO JEDNIM TACNIM ODGOVOROM, TAKVI VLAIDATORI SE U PRINCIPU ROIJETKO PRAVE. BITNO DA ZNAS SNOVNE I ONE KAD SE KRIZAJU...
-// neki QuestionValidator i AnswerValidatorHelper da ne bi ovdje sad imao kod, samo pozovem metode validacije il tako nesto.
+            //BUSSINES LOGIC   SA SAMO JEDNIM TACNIM ODGOVOROM, TAKVI VLAIDATORI SE U PRINCIPU ROIJETKO PRAVE. BITNO DA ZNAS SNOVNE I ONE KAD SE KRIZAJU...
+            // neki QuestionValidator i AnswerValidatorHelper da ne bi ovdje sad imao kod, samo pozovem metode validacije il tako nesto.
 
-            //answer.setQuestion(question);
-            Answer anw =  answerRepository.save(answer);
-            question.setAnswer(anw);
-            //anw.setQuestion(null);
+            question.setAnswer(answer);
             questionRepository.save(question);
-            // !? 50% ?   NE SACUVA SAM- pa ja moram oba repozitorija koristiti dok je za mysql jedan save indirektno spasavao oba. Ima li kakav atribut da sam to radi (mada ja svakako volim vise sam)
 
             return answerDtoMapper.answerToResponseAnswer(answer);
         }
@@ -133,5 +135,24 @@ public class QuestionServiceImpl implements QuestionService {
     public void deleteQuestionAnswerByIdAnswer(String id, String idAnswer) {
         System.out.println("Not implemented");
         return ;
+    }
+
+
+    @Override
+    public AnswerResponseDto getAnswerByIdFromQuestionById(String id,String idAnswer) {
+       Optional<Question> q = questionRepository.findByIdAnswerById(id,idAnswer);
+       if(q.isPresent())
+       {
+           QuestionAnswersDto questionAnswersDto= answerDtoMapper.QuestionToListAnswers(q.get());
+           AnswerResponseDto answerResponseDto = questionAnswersDto.getAnswerById(idAnswer);
+           if(answerResponseDto!=null)
+           {
+               return answerResponseDto;
+           }
+           else throw new EntityNotFoundException("Answer with {id="+idAnswer+"} doesn't exist");
+       }
+       else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");// ili nema odg taj
+       //return answerDtoMapper.QuestionToListAnswers(q.get()).getAnswers().get(0);
+          //answerDtoMapper.answerToResponseAnswer(q.get());
     }
 }

@@ -1,29 +1,29 @@
 package com.example.FirstApp.Entities;
 
-import com.example.FirstApp.Validators.OnlyOneTrue;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
+
 import org.bson.types.ObjectId;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 
 import javax.persistence.*;
-import javax.sound.midi.MidiMessage;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.Random;
 
-@Document
-@Entity
+
+
 @Setter @Getter @NoArgsConstructor @ToString
 public class Answer{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     @Setter(AccessLevel.PROTECTED)
-    private String id;
+    @MongoId
+    private String id = new ObjectId().toString();
 
     @Version
     private Integer version;
@@ -45,7 +45,6 @@ public class Answer{
     public Answer(@NotBlank(message = "Answer text must be entered") String answerText, @NonNull @NotNull Boolean correct) {
         this.answerText = answerText;
         this.correct = correct;
-
     }
 
     public Long getPractice()
