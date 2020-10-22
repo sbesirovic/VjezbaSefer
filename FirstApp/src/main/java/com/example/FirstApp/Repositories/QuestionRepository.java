@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+// conditional missing bean  ugl oko ovog sto sam pitao sa bazama
 @Repository
 public interface QuestionRepository extends MongoRepository<Question, String> {
 

@@ -146,7 +146,7 @@ public class QuestionServiceImpl implements QuestionService {
        Optional<Question> q = questionRepository.findByIdAnswerById(id,idAnswer);
        if(q.isPresent())
        {
-           QuestionAnswersDto questionAnswersDto= answerDtoMapper.QuestionToListAnswers(q.get());
+           QuestionAnswersDto questionAnswersDto= answerDtoMapper.QuestionToListAnswers(q.get()); // bespotrebna kompl.
            AnswerResponseDto answerResponseDto = questionAnswersDto.getAnswerById(idAnswer);
            if(answerResponseDto!=null)
            {
