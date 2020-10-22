@@ -1,12 +1,10 @@
 spring:
   data:
     mongodb:
-      database: milijunasdb
+      database: milijunastestdb
       host: localhost
       port: 27017
 
-  profiles:
-    active: test
 
 
 

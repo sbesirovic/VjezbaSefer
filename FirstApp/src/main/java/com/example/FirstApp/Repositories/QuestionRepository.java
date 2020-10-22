@@ -17,14 +17,13 @@ import java.util.Optional;
 public interface QuestionRepository extends MongoRepository<Question, String> {
 
     // Ono programiranje imenima zaboravio naziv tog tipa progr.
-
    List<Question> findByLevelAndQuestionText(int level,String questionText);
 
     //   VJEZBA DA VRATI SAMO ODREDENA POLJA ENTITETA ALI ne moze dodjeliti List<Answers> jer je po tipu on citav samo ne vraca sve podatke vec ih popuni sa "null"
-    @Query(value="{'id': ?0}" ,fields = "{'answers':{'correct':0} }") // ?0 znaci da je ovo prvi parametar metode ispod.
+    @Query(value="{'id': ?0}" /*,fields = "{'answers':{'correct':0} }"*/) // ?0 znaci da je ovo prvi parametar metode ispod.
     Optional<Question> findByIdWithoutAnswersCorrect (String id);
 
-    @Query(value="{}",fields = "{'answers':{'correct':0} }") // jer za fields mora imat i i value a ovo je query koji dohvaca sve
+    @Query(value="{}"/*,fields = "{'answers':{'correct':0} }"*/) // jer za fields mora imat i i value a ovo je query koji dohvaca sve
     List<Question> findAllWithoutAnswersCorrect ();
 
 
@@ -34,11 +33,13 @@ public interface QuestionRepository extends MongoRepository<Question, String> {
     */
 
 
-     @Query(value="{$and:[{'id': ?0},{'answers.id':?1}]}" ,fields = "{'answers':{'correct':0} }") // ?0 znaci da je ovo prvi parametar metode ispod.
+     @Query(value="{$and:[{'id': ?0},{'answers.id':?1}]}") // ?0 znaci da je ovo prvi parametar metode ispod.
      Optional<Question> findByIdAnswerById (String id,String idAnswer);
 
 }
 
-// ZADACI 21 10 2020
-// ovo sa odg u mongu,  profile on kao test i to , property klasa vrijednosti se kupe iz profila
-// angular redux sa spring bootom
+// fields JE LOSE KORISTITI DA SAKRIJES vrijednosti od neautorizovanih klijenata jer ga stavlja na null i niko ga ne vidi...
+// zato se i koriste DTO tako da ono...
+//****? A KAKO BI U OVISNOSTI OD AUTORITETA BIRALI DA LI CE SE ? DA NIJE DVA DTO I DVA RAZLICITA APIJA VEC ISTI API 2 PONASANJA ??
+
+

@@ -33,20 +33,23 @@ public class QuestionServiceImpl implements QuestionService {
     private AnswerDtoMapper answerDtoMapper = Mappers.getMapper(AnswerDtoMapper.class);
 
 
-    @Override
-    public QuestionAnswersDto getAllAnswersByQuestionId(String id) {
 
-       Optional<Question>  q = questionRepository.findByIdWithoutAnswersCorrect(id);
-       //Optional<Question>  q = questionRepository.findById(id);   ovo vraca i tacnost (correct) odgovora
-       if(q.isPresent()) return answerDtoMapper.QuestionToListAnswers(q.get());
-       else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
-    }
 
     @Override
     public List<QuestionResponseDto> getAllQuestions() {
 
         //return questionDtoMapper.questionListToResponseQuestionList((List<Question>) questionRepository.findByLevelAndQuestionText(13,"Question1?"));
         return questionDtoMapper.questionListToResponseQuestionList((List<Question>) questionRepository.findAllWithoutAnswersCorrect());
+    }
+
+    @Override
+    public QuestionResponseDto getQuestionById(String id) {
+        Optional<Question> optionalQuestion = questionRepository.findByIdWithoutAnswersCorrect(id);
+        if(optionalQuestion.isPresent())
+        {
+            return questionDtoMapper.questionToResponseQuestion(optionalQuestion.get());
+        }
+        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
     @Override
@@ -57,6 +60,25 @@ public class QuestionServiceImpl implements QuestionService {
 
             return questionDtoMapper.questionToResponseQuestion(question);
 
+    }
+
+    @Override
+    public QuestionAnswersDto getAllAnswersByQuestionId(String id) {
+
+        Optional<Question>  q = questionRepository.findByIdWithoutAnswersCorrect(id);
+        //Optional<Question>  q = questionRepository.findById(id);   ovo vraca i tacnost (correct) odgovora
+        if(q.isPresent()) return answerDtoMapper.QuestionToListAnswers(q.get());
+        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
+    }
+
+    @Override
+    public void deleteQuestionById(String id) {
+        Optional<Question> optionalQuestion = questionRepository.findById(id);
+        if(optionalQuestion.isPresent())
+        {
+            questionRepository.deleteById(id);
+        }
+        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
     @Override
@@ -90,25 +112,6 @@ public class QuestionServiceImpl implements QuestionService {
         else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
     }
 
-    @Override
-    public QuestionResponseDto getQuestionById(String id) {
-        Optional<Question> optionalQuestion = questionRepository.findByIdWithoutAnswersCorrect(id);
-        if(optionalQuestion.isPresent())
-        {
-            return questionDtoMapper.questionToResponseQuestion(optionalQuestion.get());
-        }
-        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
-    }
-
-    @Override
-    public void deleteQuestionById(String id) {
-        Optional<Question> optionalQuestion = questionRepository.findById(id);
-        if(optionalQuestion.isPresent())
-        {
-            questionRepository.deleteById(id);
-        }
-        else throw new EntityNotFoundException("Question with {id="+id+"} doesn't exist");
-    }
 
 
     @Override

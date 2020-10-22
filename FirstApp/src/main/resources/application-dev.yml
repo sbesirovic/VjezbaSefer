@@ -4,12 +4,8 @@ spring:
       database: milijunasdb
       host: localhost
       port: 27017
-
-  profiles:
-    active: test
-
-
-
+  jackson:
+    default-property-inclusion: non-null
 
 
 

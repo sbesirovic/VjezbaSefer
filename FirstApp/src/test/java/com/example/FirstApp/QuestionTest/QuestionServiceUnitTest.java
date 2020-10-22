@@ -41,7 +41,7 @@ public class QuestionServiceUnitTest {
     @Test
     public void getAllAnswers() {
         //when
-        when(questionRepository.findAll()).thenReturn(Stream
+        when(questionRepository.findAllWithoutAnswersCorrect()).thenReturn(Stream
                 .of(new Question(12,"truadssdse"),new Question(3,"sadfalse")).collect(Collectors.toList())    );
 
         for(QuestionResponseDto questionResponseDto:questionService.getAllQuestions()) System.out.println(questionResponseDto.toString());
@@ -77,7 +77,7 @@ public class QuestionServiceUnitTest {
     @Test
     public void getAnswerByIdTest()
     {
-        when(questionRepository.findById("13L")).thenReturn(Optional.of(new Question(14, "pitanje3")));
+        when(questionRepository.findByIdWithoutAnswersCorrect("13L")).thenReturn(Optional.of(new Question(14, "pitanje3")));
 
         assertEquals(  questionService.getQuestionById("13L").getQuestionText(),"pitanje3"  );
         //assertThat(answerService.getAnswerById(13L).getText(),is("Answer of the question"));  -> DEPRECATED
